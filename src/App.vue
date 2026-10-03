@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 import { t, tr, lang, toggleLang, img, site, wa, devices, symptomsFor, symptoms, parts, reviews } from './data'
+import DeviceIcon from './DeviceIcon.vue'
 
 const scrolled = ref(false)
 const onScroll = () => { scrolled.value = window.scrollY > 30 }
@@ -76,7 +77,7 @@ const year = new Date().getFullYear()
           <span class="scan" aria-hidden="true"></span>
         </figure>
       </div>
-      <div class="ticker" aria-hidden="true"><div class="track"><span v-for="n in 2" :key="n"><b v-for="d in devices" :key="d.id + n">{{ d.code }} · {{ tr(d.t) }}</b></span></div></div>
+      <div class="ticker" aria-hidden="true"><div class="track"><span v-for="n in 2" :key="n"><b v-for="d in devices" :key="d.id + n"><DeviceIcon :name="d.id" />{{ tr(d.t) }}</b></span></div></div>
     </section>
 
     <section class="section doctor" id="doctor">
@@ -86,7 +87,7 @@ const year = new Date().getFullYear()
           <form class="dr-form" novalidate @submit.prevent="send">
             <fieldset><legend><span class="mono">01</span>{{ t.doctor.s1 }}</legend>
               <div class="devs">
-                <button v-for="d in devices" :key="d.id" type="button" :class="{ on: f.dev === d.id }" @click="f.dev = d.id"><i class="mono">{{ d.code }}</i>{{ tr(d.t) }}</button>
+                <button v-for="d in devices" :key="d.id" type="button" :class="{ on: f.dev === d.id }" @click="f.dev = d.id"><DeviceIcon :name="d.id" />{{ tr(d.t) }}</button>
               </div>
             </fieldset>
             <fieldset><legend><span class="mono">02</span>{{ t.doctor.s2 }}</legend>
